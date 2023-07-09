@@ -1,19 +1,13 @@
 package org.rtf;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.io.Writer;
 
-import javax.swing.JEditorPane;
-import javax.swing.text.StyledEditorKit;
 public class RTFReader {
 
-	public static void main(String args[]) {
-		String inputHtml="<p><b>i am a bold paragraph</b></p>world<br>i am break;<br>Numbers List<ul><li>1</li><li>2</li><li>3</li></ul>";
-		String rtfOutput = convertHtmlToRtf(inputHtml);
-		System.out.println(rtfOutput);
-		String returnHtml = testRtfToHtml(rtfOutput);
-		System.out.println(returnHtml);
-	}
+	/**
+	 * This method read input as html 
+	 * return rtf string
+	 * @param html
+	 * @return
+	 */
 	
 	public static String convertHtmlToRtf(String html) {
 	    String tmp = html.replaceAll("\\R", " ")
@@ -207,35 +201,5 @@ public class RTFReader {
 	    }
 	    return sb.toString();
 	}
-	 
-	 static  String testRtfToHtml(String rtf)
-	 {
-	     JEditorPane pane = new JEditorPane();
-	     pane.setContentType("text/rtf");
-
-	     StyledEditorKit kitRtf = (StyledEditorKit) pane.getEditorKitForContentType("text/rtf");
-
-	     try
-	     {
-	         kitRtf.read(
-	             new StringReader(
-	                 
-	            		 rtf),
-	             pane.getDocument(), 0);
-	         kitRtf = null;
-
-	         StyledEditorKit kitHtml =
-	             (StyledEditorKit) pane.getEditorKitForContentType("text/html");
-
-	         Writer writer = new StringWriter();
-	         kitHtml.write(writer, pane.getDocument(), 0, pane.getDocument().getLength());
-	         return writer.toString();
-	     }
-	     catch (Exception e)
-	     {
-	         e.printStackTrace();
-	     }
-		return null;
-	 }
 	 
 }
